@@ -10,13 +10,13 @@
 
 | | Predicted | Actual |
 |--|-----------|--------|
-| 🥇 Winner | Kimi Antonelli | ` ` |
-| 🥈 2nd | George Russell | ` ` |
-| 🥉 3rd | Valtteri Bottas* | ` ` |
-| 🎖️ Fastest Lap | — | ` ` |
-| ✅ Model Correct? | — | ` yes / no ` |
+| 🥇 Winner | Kimi Antonelli | **George Russell** |
+| 🥈 2nd | George Russell | **Kimi Antonelli** |
+| 🥉 3rd | Valtteri Bottas* | **Charles Leclerc** |
+| 🎖️ Fastest Lap | — | — |
+| ✅ Model Correct? | Almost 😅 | **Top 2 correct, wrong order** |
 
-*\*Bottas P3 prediction is likely a model artifact — see notes below*
+*\*Bottas P3 prediction was a model artifact — DNF'd in actual race*
 
 ---
 
@@ -41,31 +41,46 @@
 
 *Fill this in after the race on March 9, 2026*
 
-| Pos | Driver | Team | Notes |
+| Pos | Driver | Team | Time/Gap |
 |-----|--------|------|-------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
-| DNF | | | |
-| DNF | | | |
+| 1 | George Russell | Mercedes | 1:23:06.801 |
+| 2 | Kimi Antonelli | Mercedes | +2.974s |
+| 3 | Charles Leclerc | Ferrari | +15.519s |
+| 4 | Lewis Hamilton | Ferrari | +16.143s |
+| 5 | Lando Norris | McLaren | +51.741s |
+| 6 | Max Verstappen | Red Bull | +54.617s |
+| 7 | Oliver Bearman | Haas | +1 Lap |
+| 8 | Arvid Lindblad | RB | +1 Lap |
+| 9 | Gabriel Bortoleto | Audi | +1 Lap |
+| 10 | Pierre Gasly | Alpine | +1 Lap |
+| 15 | Carlos Sainz | Williams | +2 Laps |
+| DNF | Fernando Alonso | Aston Martin | — |
+| DNF | Valtteri Bottas | Cadillac | — |
+| DNF | Isack Hadjar | Red Bull | — |
+| DNS | Oscar Piastri | McLaren | — |
+| DNS | Nico Hulkenberg | Audi | — |
 
-**Fastest Lap:** &nbsp;
-**Safety Cars:** &nbsp;
-**Notable incidents:** &nbsp;
+**Fastest Lap:** —
+**Safety Cars:** —
+**Notable incidents:** Piastri & Hulkenberg DNS, Hadjar DNF, Alonso DNF, Bottas DNF
 
 ---
 
 ## 🧠 Model Notes & Post-Race Analysis
 
 ### What the model got right
-*Fill in after race*
-- 
+- ✅ **Mercedes 1-2** — nailed it, both Russell & Antonelli in top 2
+- ✅ **Leclerc top 5** — predicted P5, finished P3 (close!)
+- ✅ **Norris top 6** — predicted P6, finished P5
+- ✅ **Verstappen recovery** — model underweighted him (P20 start) but he charged to P6
+- ✅ **Bottas & Sainz NOT winning** — despite model artifacts, both were non-factors
 
 ### What the model got wrong
-*Fill in after race*
-- 
+- ❌ **Winner order flipped** — Russell won, not Antonelli (35.6% vs 36.8% was basically a coin flip anyway)
+- ❌ **Bottas P3 artifact** — DNF'd in reality, confirming this was a bad prediction
+- ❌ **Hadjar DNF** — predicted P4 contender, retired from the race
+- ❌ **Piastri & Hulkenberg DNS** — not modelled at all (impossible to predict pre-race)
+- ❌ **Bearman P7** — not on the model's radar at all, good result for Haas
 
 ### Known issues with this prediction
 
@@ -89,10 +104,11 @@
 
 | Metric | Value |
 |--------|-------|
-| Predicted winner correct | ` - ` |
-| Winner in top 3 predictions | ` - ` |
-| Average position error (top 5) | ` - ` |
-| Biggest miss | ` - ` |
+| Predicted winner correct |  (got P2 right, wrong order) |
+| Winner in top 2 predictions | Yes — Russell was our P2 pick |
+| Top 2 drivers correct |  Yes — Russell & Antonelli |
+| Biggest hit | Mercedes 1-2 prediction |
+| Biggest miss | Bottas P3 (DNF), Hadjar DNF, Piastri DNS |
 
 ---
 
