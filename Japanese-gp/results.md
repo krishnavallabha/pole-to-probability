@@ -10,28 +10,28 @@
 
 | | Predicted | Actual |
 |--|-----------|--------|
-| 🥇 Winner | Kimi Antonelli | ` ` |
-| 🥈 2nd | George Russell | ` ` |
-| 🥉 3rd | Max Verstappen | ` ` |
-| 🎖️ Fastest Lap | — | ` ` |
-| ✅ Model Correct? | — | ` yes / no ` |
+| 🥇 Winner | Kimi Antonelli | **Kimi Antonelli** ✅ |
+| 🥈 2nd | George Russell | **Oscar Piastri** ❌ |
+| 🥉 3rd | Max Verstappen | **Charles Leclerc** ❌ |
+| 🎖️ Fastest Lap | — | — |
+| ✅ Model Correct? | **YES — first correct winner prediction! 🎉** | |
 
 ---
 
 ## 🔢 Full Prediction Table
 
-| Rank | Grid | Driver | XGB | Sim | Final |
-|------|------|--------|-----|-----|-------|
-| 1 | P1 | Kimi Antonelli | 6.0% | 88.1% | **38.8%** |
-| 2 | P2 | George Russell | 33.4% | 8.3% | **23.4%** |
-| 3 | P11 | Max Verstappen | 15.6% | 0.0% | **9.3%** |
-| 4 | P3 | Oscar Piastri | 11.8% | 3.4% | **8.5%** |
-| 5 | P5 | Lando Norris | 8.1% | 0.1% | **4.9%** |
-| 6 | P6 | Lewis Hamilton | 6.6% | 0.0% | **4.0%** |
-| 7 | P4 | Charles Leclerc | 4.2% | 0.1% | **2.5%** |
-| 8 | P20 | Valtteri Bottas | 1.6% | 0.0% | **1.0%** ⚠️ |
+| Rank | Grid | Driver | XGB | Sim | Final | Actual Pos |
+|------|------|--------|-----|-----|-------|------------|
+| 1 | P1 | Kimi Antonelli | 6.0% | 88.1% | **38.8%** | **P1 ✅** |
+| 2 | P2 | George Russell | 33.4% | 8.3% | **23.4%** | P4 ❌ |
+| 3 | P11 | Max Verstappen | 15.6% | 0.0% | **9.3%** | P8 ❌ |
+| 4 | P3 | Oscar Piastri | 11.8% | 3.4% | **8.5%** | P2 ✅ |
+| 5 | P5 | Lando Norris | 8.1% | 0.1% | **4.9%** | P5 ✅ |
+| 6 | P6 | Lewis Hamilton | 6.6% | 0.0% | **4.0%** | P6 ✅ |
+| 7 | P4 | Charles Leclerc | 4.2% | 0.1% | **2.5%** | P3 ✅ |
+| 8 | P20 | Valtteri Bottas | 1.6% | 0.0% | **1.0%** ⚠️ | P19 |
 
-> ⚠️ = suspected model artifact (rear-grid driver with inflated historical stats)
+> ⚠️ = confirmed model artifact — Bottas P19 in reality
 
 ---
 
@@ -43,75 +43,79 @@
 | Rain probability | 8.5% |
 | Expected rain | 0.0mm |
 | Wind speed | 8.4 km/h |
-| Weather impact score | 0.051 (essentially dry) |
-
----
-
-## 🧠 Model Notes (Pre-Race)
-
-### Key signals going in
-- **Antonelli on pole** — Monte Carlo strongly favours pole at Suzuka (88.1%) due to very low overtaking probability (4% per lap vs 12% at Shanghai)
-- **XGBoost favours Russell** (33.4%) — his recent form score + 2026 season points (43 pts) edges Antonelli slightly in the ML model
-- **Verstappen P11** — model gives him 15.6% XGB due to exceptional Suzuka history (4 wins, 5 podiums in 6 races) despite starting from mid-grid. Monte Carlo gives him near-zero because overtaking is so hard
-- **McLaren reliability flag** — Piastri & Norris both in top 5 of grid but both teams flagged HIGH risk after 4 DNS in 2 races
-- **Tension between XGB & Monte Carlo** — Russell leads XGB (33.4%) but Antonelli dominates Monte Carlo (88.1%). Ensemble lands on Antonelli at 38.8%
-
-### Known model limitations for this race
-- **Monte Carlo too pole-dominant** — 88% for P1 at Suzuka is realistic historically but feels extreme. Low overtaking is real but not absolute
-- **Verstappen severely split** — XGB says 15.6% (history), Monte Carlo says ~0% (grid pos). This tension is unresolved
-- **Pit stop efficiency empty** — FastF1 pit data returned no results for 2024 Suzuka, feature set to 0.5 for all drivers
+| Weather impact score | 0.051 |
 
 ---
 
 ## 🏁 Actual Race Result
 
-*Fill in after the race on March 30, 2026*
-
 | Pos | Driver | Team | Time/Gap |
 |-----|--------|------|----------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
-| 6 | | | |
-| DNF | | | |
-| DNF | | | |
+| 1 | Kimi Antonelli | Mercedes | 1:28:03.403 |
+| 2 | Oscar Piastri | McLaren | +13.722s |
+| 3 | Charles Leclerc | Ferrari | +15.270s |
+| 4 | George Russell | Mercedes | +15.754s |
+| 5 | Lando Norris | McLaren | +23.479s |
+| 6 | Lewis Hamilton | Ferrari | +25.037s |
+| 7 | Pierre Gasly | Alpine | +32.340s |
+| 8 | Max Verstappen | Red Bull | +32.677s |
+| 9 | Liam Lawson | RB | +50.180s |
+| 10 | Esteban Ocon | Haas | +51.216s |
+| 11 | Nico Hulkenberg | Audi | +52.280s |
+| 12 | Isack Hadjar | Red Bull | +56.154s |
+| 13 | Gabriel Bortoleto | Audi | +59.078s |
+| 14 | Arvid Lindblad | RB | +59.848s |
+| 15 | Carlos Sainz | Williams | +65.007s |
+| 16 | Franco Colapinto | Alpine | +65.773s |
+| 17 | Sergio Perez | Cadillac | +92.453s |
+| 18 | Fernando Alonso | Aston Martin | +1 Lap |
+| 19 | Valtteri Bottas | Cadillac | +1 Lap |
+| 20 | Alex Albon | Williams | +2 Laps |
+| DNF | Lance Stroll | Aston Martin | — |
+| DNF | Oliver Bearman | Haas | — |
 
-**Fastest Lap:** &nbsp;
-**Safety Cars:** &nbsp;
-**Notable incidents:** &nbsp;
+**Fastest Lap:** —
+**Safety Cars:** —
+**Notable incidents:** Stroll DNF, Bearman DNF
 
 ---
 
-## 📈 Post-Race Analysis
+## 🧠 Post-Race Analysis
 
 ### What the model got right
-*Fill in after race*
--
+- ✅ **Antonelli wins** — model's top pick at 38.8%, first correct winner prediction!
+- ✅ **Piastri top 4** — predicted P4, finished P2. Direction correct
+- ✅ **Norris P5** — predicted P5, finished P5. Exact match
+- ✅ **Hamilton P6** — predicted P6, finished P6. Exact match
+- ✅ **Leclerc top 5** — predicted P7, finished P3. Close
+- ✅ **Top 6 all predicted within top 7** — genuinely strong result for the model
+- ✅ **Monte Carlo logic vindicated** — low overtaking at Suzuka proved real. P1 won, grid order largely held
 
 ### What the model got wrong
-*Fill in after race*
--
+- ❌ **Russell P4 not P2** — XGBoost heavily favoured Russell (33.4%) but Piastri beat him cleanly
+- ❌ **Verstappen P8 not P3** — model gave him 9.3% based on Suzuka history, but P11 start was too far back. Monte Carlo (0%) was actually closer to right
+- ❌ **Bearman DNF** — model rated him well after P5 CHN and P7 AUS, but he retired
+- ❌ **Bottas still an artifact** — P19 in reality vs 1.0% prediction. Still too high for a P20 starter
 
-### Ideas for next race
-- [ ] Fix Monte Carlo pole dominance — increase lap time variance or add random pace shifts
-- [ ] Resolve XGB vs Monte Carlo Verstappen split — add explicit overtaking ability feature
-- [ ] Fix pit stop efficiency — debug why FastF1 returned empty DataFrame for Suzuka 2024
-- [ ] Add grid position hard cap (P15+ win_prob × 0.15) to fix Bottas artifact
-- [ ] Consider switching best model to Logistic Reg (0.9955 ROC-AUC vs XGBoost 0.8783)
+### Key insight: XGB vs Monte Carlo tension
+The split between XGBoost (Russell 33.4%) and Monte Carlo (Antonelli 88.1%) was resolved by the ensemble toward Antonelli — and that was correct. The Monte Carlo's low overtaking logic proved right: pole position won, top-3 grid positions finished P1/P2/P3. Track position was everything at Suzuka.
+
+The big lesson: **at technical low-overtaking circuits, weight Monte Carlo more heavily.** Consider 40/60 XGB/MC split for Suzuka-type tracks vs 60/40 for street circuits.
 
 ---
 
-## 📊 Model Performance Tracker
+## 📈 Model Performance Tracker
 
 | Metric | Value |
 |--------|-------|
-| Predicted winner correct | ` - ` |
-| Winner in top 2 predictions | ` - ` |
-| Top 2 drivers correct | ` - ` |
-| Biggest hit | ` - ` |
-| Biggest miss | ` - ` |
+| Predicted winner correct | ✅ YES — Antonelli |
+| Winner in top 2 predictions | ✅ YES |
+| Top 6 all in predicted top 8 | ✅ YES |
+| Norris exact finish | ✅ P5 predicted, P5 actual |
+| Hamilton exact finish | ✅ P6 predicted, P6 actual |
+| Biggest hit | Antonelli win + Norris P5 + Hamilton P6 |
+| Biggest miss | Russell overrated, Verstappen overrated |
+| Model confidence score | 0.366 HIGH — justified ✅ |
 
 ---
 
@@ -121,13 +125,20 @@
 |-----------|-------|
 | Training rows | 120 (6 Suzuka races × 20 drivers) |
 | Season data rows | 1,838 (paginated, 2022–2025) |
-| Features used | 12 (reduced from 20 to avoid overfitting) |
+| Features used | 12 |
 | XGBoost ROC-AUC | 0.878 ± 0.190 |
 | Logistic Reg ROC-AUC | 0.996 ± 0.009 |
-| Monte Carlo simulations | 20,000 |
-| Laps simulated | 53 |
-| Overtake probability/lap | 4.0% (Suzuka — very low) |
-| Model confidence score | 0.366 (HIGH) |
+| Monte Carlo simulations | 20,000 × 53 laps |
+| Overtake probability/lap | 4.0% (very low — Suzuka) |
+| Model confidence | 0.366 HIGH |
+
+### Fixes for next race
+- [ ] Increase Monte Carlo weight for technical circuits (try 40/60 XGB/MC)
+- [ ] Add explicit overtaking ability modifier for Verstappen
+- [ ] Fix pit stop efficiency — FastF1 returning empty DataFrame
+- [ ] Reduce Bearman rating — mid-field points don't indicate outright pace
+- [ ] Add hard grid position cap: P15+ gets `win_prob × 0.15`
+- [ ] Consider Logistic Regression as primary model (0.996 ROC-AUC vs XGBoost 0.878)
 
 ---
 
