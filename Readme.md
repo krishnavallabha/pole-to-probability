@@ -5,9 +5,9 @@
 ---
 
 ```
-P1  GEORGE RUSSELL     ████████████████████  32.4%  ← the model
+P1  KIMI ANTONELLI     ████████████████████  38.8%  ← the model (JPN)
 P2  YOUR PREDICTION    ███                    4.1%  ← you, picking with your heart
-P20 MAX VERSTAPPEN     █                      1.2%  ← started from the back (again)
+P11 MAX VERSTAPPEN     ██████                 9.3%  ← history says yes, grid says no
 ```
 
 ---
@@ -16,32 +16,34 @@ P20 MAX VERSTAPPEN     █                      1.2%  ← started from the back 
 
 A collection of ML models that attempt to predict F1 Grand Prix race winners using **real historical data** — not vibes, not gut feeling, not "I just feel like Lando is due one."
 
-Each race gets its own notebook. Each notebook pulls real data from the **Jolpica-F1 API** + **FastF1**, engineers features that actually matter (grid position, Melbourne podium history, recent form, constructor pace), trains an **XGBoost** model on real outcomes, and runs a **Monte Carlo simulation** with chaos factors baked in (safety cars, DNFs, first-race-of-new-regs madness).
+Each race gets its own notebook. Each notebook pulls real data from the **Jolpica-F1 API** + **FastF1**, engineers features that actually matter (grid position, track-specific podium history, recent form, constructor pace, tyre degradation, DNF probability, live weather), trains an **XGBoost** model on real outcomes, and runs a **per-lap Monte Carlo simulation** with chaos factors baked in.
 
-Does it work? Somewhat. Is it more reliable than your fantasy F1 team? Almost certainly.
-
----
-
-## races so far
-
-| 🏁 Race | Season | Predicted Winner | Actual Winner | 😬 |
-|---------|--------|-----------------|---------------|-----|
-| [Australian GP](./australian-gp/) | 2026 | TBD | TBD | race is tomorrow lol |
-
-*More races added throughout the 2026 season.*
+Does it work? Getting better every race. Is it more reliable than your fantasy F1 team? Almost certainly.
 
 ---
 
-## the stack
+## 🏁 races so far
 
-```python
-fastf1          # lap times, telemetry, sector data — the good stuff
-jolpica-f1-api  # every race result since 1950 (ergast's cooler successor)
-xgboost         # does the heavy lifting
-scikit-learn    # model comparison, cross-validation
-pandas + numpy  # obviously
-matplotlib      # pretty charts to show people at parties
-```
+| Race | Round | Predicted Winner | Actual Winner | Result |
+|------|-------|-----------------|---------------|--------|
+| [Australian GP](./australian-gp/) | R1 | Kimi Antonelli (36.8%) | George Russell | 🟡 Top 2 correct, order flipped |
+| [Chinese GP](./chinese-gp/) | R2 | — | Kimi Antonelli | ⬜ No prediction made |
+| [Japanese GP](./japanese-gp/) | R3 | Kimi Antonelli (38.8%) | — | 🕐 Race pending |
+
+*Updated after each race weekend throughout the 2026 season.*
+
+---
+
+## 📈 season accuracy tracker
+
+| Metric | Value |
+|--------|-------|
+| Races predicted | 2 of 3 |
+| Winner correct | 0 / 2 |
+| Winner in top 2 | 1 / 2 (AUS ✅) |
+| Top 2 both correct | 1 / 2 (AUS ✅) |
+| Biggest hit | Mercedes 1-2 at AUS |
+| Biggest miss | Bottas P3 artifact (DNF'd) |
 
 ---
 
@@ -51,26 +53,50 @@ matplotlib      # pretty charts to show people at parties
 Real Qualifying Data          Historical Race Results (2018–2025)
         │                                   │
         ▼                                   ▼
-  Feature Engineering  ◄──────────────────────────────┐
-  - grid_advantage                                     │
-  - quali_advantage              Jolpica F1 API        │
-  - melb_win_rate                (all 20 drivers,      │
-  - recent_form_score             not just the winner) │
-  - constructor_pace             ─────────────────────►┘
+  Feature Engineering  ◄──────────────────────────────────────┐
+  - grid_advantage (track-specific decay)                      │
+  - gap_to_pole (real quali times in seconds)   Jolpica API   │
+  - track_win_rate / podium_rate                (paginated,    │
+  - recent_form_score (2024-2025)                all drivers)  │
+  - constructor_pace_2026 (updated each race)  ──────────────►┘
+  - tyre_deg_rate (FastF1 stint analysis)
+  - pit_stop_efficiency (FastF1)
+  - weather_impact (Open-Meteo live forecast)
+  - dnf_probability (3-component module)
+  - 2026_season_form (real race results)
         │
         ▼
    XGBoost Model
-   (trained on real outcomes)
+   (trained on real historical race outcomes)
         │
         ▼
-  Monte Carlo Sim (15,000 runs)
-  + safety car lottery
-  + DNF roulette
-  + new-regs chaos factor
+  Per-Lap Monte Carlo (20,000 sims × 53 laps)
+  + tyre degradation curve per compound
+  + safety car events per lap
+  + DNF probability per lap per driver
+  + pit window open/close logic
+  + track-specific overtaking probability
+        │
+        ▼
+  Ensemble (60% XGBoost + 40% Monte Carlo)
+  + Model confidence score (entropy-based)
         │
         ▼
   🏆 Predicted Winner
-     (probably Russell)
+```
+
+---
+
+## the stack
+
+```python
+fastf1          # lap times, tyre stints, pit stop data, race pace
+jolpica-f1-api  # every race result since 1950 (ergast's cooler successor)
+open-meteo      # live race day weather forecast (free, no API key needed)
+xgboost         # main prediction model
+scikit-learn    # model comparison, cross-validation, logistic regression
+pandas + numpy  # data wrangling
+matplotlib      # dark mode dashboards
 ```
 
 ---
@@ -81,14 +107,31 @@ Real Qualifying Data          Historical Race Results (2018–2025)
 pole-to-probability/
 │
 ├── australian-gp/
-│   └── 2026_AustralianGP_FastF1_Predictor.ipynb
+│   ├── 2026_AustralianGP_FastF1_Predictor.ipynb
+│   └── results.md
 │
-├── chinese-gp/           ← coming soon
-├── japanese-gp/          ← coming soon
-├── bahrain-gp/           ← coming soon
+├── chinese-gp/               ← no prediction made (missed qualifying)
 │
-└── README.md             ← you are here
+├── japanese-gp/
+│   ├── 2026_JapaneseGP_Predictor.ipynb
+│   └── results.md
+│
+├── bahrain-gp/               ← coming soon
+│
+└── README.md                 ← you are here
 ```
+
+---
+
+## model evolution
+
+The model gets meaningfully better each race as more 2026 data accumulates:
+
+| Version | Race | Key upgrades |
+|---------|------|-------------|
+| v1 | Australian GP | Real Jolpica data, XGBoost, basic Monte Carlo |
+| v2 | Japanese GP | FastF1 tyre deg + pit data, per-lap Monte Carlo (53 laps × 20k sims), DNF module (3-component), live weather, gap-to-pole feature, track normalisation, model confidence score |
+| v3 | Bahrain GP | *coming — overtaking ability feature, grid position hard cap, Logistic Reg as primary model* |
 
 ---
 
@@ -96,11 +139,11 @@ pole-to-probability/
 
 ```bash
 git clone https://github.com/yourusername/pole-to-probability
-cd pole-to-probability/australian-gp
+cd pole-to-probability/japanese-gp
 ```
 
-Then open the `.ipynb` in **Google Colab** and run all cells.  
-First run downloads ~50MB of FastF1 cache data. Grab a coffee. ☕
+Open the `.ipynb` in **Google Colab** and run all cells.
+First run downloads ~80MB of FastF1 cache. Grab a coffee. ☕
 
 **Requirements** (auto-installed in Cell 1):
 ```
@@ -113,38 +156,22 @@ fastf1 xgboost scikit-learn pandas numpy matplotlib seaborn requests
 
 - The model has never driven an F1 car *(neither have I, but still)*
 - Safety cars are unpredictable by definition — we just accept this
-- Max Verstappen's qualifying crash in 2026 Australia was not in the training data
-- The 2026 constructor pace weights are educated guesses based on one qualifying session
-- Weather is not modelled *(Melbourne weather is basically a random number generator anyway)*
+- McLaren's DNS streak is modelled but the root cause isn't (we just know it keeps happening)
+- Verstappen's overtaking ability is severely underweighted by grid position penalty
+- Pit stop efficiency data currently returns empty for some circuits via FastF1
+- With only 6 years of Suzuka data, 120 training rows is tight for XGBoost
 - This will not make you money at a betting shop. Please do not try.
-
----
-
-## results & accuracy
-
-*Section to be updated after each race weekend.*
-
-The goal isn't a perfect prediction — it's understanding **why** certain drivers and teams are favoured, and by how much. The feature importance charts are honestly more interesting than the final number.
 
 ---
 
 ## contributing
 
-Found a bug? Have a better feature idea? Know why Stroll didn't even leave the garage?  
+Found a bug? Have a better feature idea? Know why Stroll didn't even leave the garage in Australia?
 PRs welcome. Open an issue. Let's talk F1.
 
 ---
 
-## disclaimer
 
-```
-This project is for educational and entertainment purposes only.
-Do not use it to make financial decisions.
-The author accepts no responsibility for fantasy F1 team failures.
-Max Verstappen will probably still win the championship anyway.
-```
-
----
 
 <div align="center">
 
