@@ -28,7 +28,7 @@ Does it work? Getting better every race. Is it more reliable than your fantasy F
 |------|-------|-----------------|---------------|--------|
 | [Australian GP](./australian-gp/) | R1 | Kimi Antonelli (36.8%) | George Russell | 🟡 Top 2 correct, order flipped |
 | [Chinese GP](./chinese-gp/) | R2 | — | Kimi Antonelli | ⬜ No prediction made |
-| [Japanese GP](./japanese-gp/) | R3 | Kimi Antonelli (38.8%) | — | 🕐 Race pending |
+| [Japanese GP](./japanese-gp/) | R3 | Kimi Antonelli (38.8%) | Kimi Antonelli | ✅ Winner correct! |
 
 *Updated after each race weekend throughout the 2026 season.*
 
@@ -39,11 +39,13 @@ Does it work? Getting better every race. Is it more reliable than your fantasy F
 | Metric | Value |
 |--------|-------|
 | Races predicted | 2 of 3 |
-| Winner correct | 0 / 2 |
-| Winner in top 2 | 1 / 2 (AUS ✅) |
+| Winner correct | 1 / 2 ✅ (JPN) |
+| Winner in top 2 | 2 / 2 ✅ |
 | Top 2 both correct | 1 / 2 (AUS ✅) |
-| Biggest hit | Mercedes 1-2 at AUS |
-| Biggest miss | Bottas P3 artifact (DNF'd) |
+| Norris position exact | ✅ P5 predicted, P5 finished (JPN) |
+| Hamilton position exact | ✅ P6 predicted, P6 finished (JPN) |
+| Biggest hit | Antonelli win at JPN + Mercedes 1-2 at AUS |
+| Biggest miss | Bottas P3 artifact (AUS), Piastri P2 underrated (JPN) |
 
 ---
 
@@ -172,6 +174,8 @@ PRs welcome. Open an issue. Let's talk F1.
 ---
 
 
+
+---
 
 <div align="center">
 
